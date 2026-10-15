@@ -532,7 +532,7 @@ function Hero() {
             />
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed">
-            I build software and sometimes hardware. A lot of what I know I learned by trying things I wasn’t sure I could do yet.
+            I build software and sometimes hardware. A lot of what I know I learned by trying things I wasn’t sure I could do yet :)
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
