@@ -82,6 +82,8 @@ interface Project {
   featured?: boolean;
   note?: string;
   image?: string;
+  live?: string;
+  github?: string;
 }
 const PROJECTS: Project[] = [
   {
@@ -96,29 +98,21 @@ const PROJECTS: Project[] = [
   },
   {
     title: "Powder Puff",
-    description: "A serverless Python bot that tracks overnight snowfall at my favorite local mountains. Hosted on Vercel with a Supabase database, it powers a custom dashboard and sends styled HTML email alerts for fresh powder days.",
-    stack: ["Python", "FastAPI", "Serverless", "PostgreSQL"],
+    description: "A serverless Python app that tracks overnight snowfall at 42 ski resorts across Ontario and Quebec. Runs on Vercel with a daily cron job and a Neon Postgres database, and anyone can sign up to get styled email alerts when their mountains get a powder day.",
+    stack: ["Python", "FastAPI", "Serverless", "PostgreSQL", "Cron Jobs"],
     tone: "pink",
-    image: "",
-  },
-  {
-    title: "Project 3",
-    description: "Placeholder",
-    stack: ["1", "2"],
-    tone: "white",
-  },
-  {
-    title: "Project 4",
-    description: "Placeholder",
-    stack: ["1", "2"],
-    tone: "white",
+    image: "/powderpuff.jpeg",
+    live: "https://powderpuff.vercel.app",
+    github: "https://github.com/elikafarokhi/powder-puff",
   },
   {
     title: "Portfolio",
     description: "The website you're looking at right now! Built from scratch to showcase my experience, featuring a custom interactive UI and real-time content updates.",
     stack: ["React", "TypeScript", "Tailwind CSS", "Firebase"],
     tone: "yellow",
-    image: "/portfolio.jpeg"
+    image: "/portfolio.jpeg",
+    live: "https://elikafarokhi.vercel.app",
+    github: "https://github.com/elikafarokhi/elikas-portfolio",
   },
 ];
 
@@ -278,6 +272,13 @@ function CameraIcon() {
     <svg {...iconProps} width={28} height={28} strokeWidth={1.5}>
       <path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" />
       <circle cx="12" cy="13" r="3.5" />
+    </svg>
+  );
+}
+function GithubIcon() {
+  return (
+    <svg width={16} height={16} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.38 7.86 10.9.575.105.785-.25.785-.555 0-.275-.01-1-.015-1.96-3.2.695-3.875-1.54-3.875-1.54-.525-1.33-1.28-1.685-1.28-1.685-1.045-.715.08-.7.08-.7 1.155.08 1.765 1.185 1.765 1.185 1.03 1.76 2.7 1.25 3.36.955.105-.745.4-1.25.73-1.54-2.555-.29-5.24-1.275-5.24-5.68 0-1.255.45-2.28 1.185-3.085-.12-.29-.515-1.46.11-3.04 0 0 .965-.31 3.165 1.18a10.99 10.99 0 0 1 5.76 0c2.2-1.49 3.165-1.18 3.165-1.18.625 1.58.23 2.75.11 3.04.74.805 1.185 1.83 1.185 3.085 0 4.415-2.69 5.385-5.255 5.67.41.355.78 1.055.78 2.125 0 1.535-.015 2.77-.015 3.15 0 .31.205.67.79.555C20.215 21.375 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z" />
     </svg>
   );
 }
@@ -729,23 +730,61 @@ function Projects() {
             )}
 
             <div className="shrink-0 sm:w-64">
-              {p.image ? (
-                <img
-                  src={p.image}
-                  alt={p.title}
-                  className="aspect-video h-full w-full rounded-xl object-contain"
-                />
-              ) : (
-                <ImagePlaceholder
-                  label="Project thumbnail"
-                  tone={PROJECT_TONES[p.tone].placeholder}
-                  className="aspect-video h-full w-full"
-                />
-              )}
+              {(() => {
+                const thumb = p.image ? (
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    className="aspect-video h-full w-full rounded-xl object-contain"
+                  />
+                ) : (
+                  <ImagePlaceholder
+                    label="Project thumbnail"
+                    tone={PROJECT_TONES[p.tone].placeholder}
+                    className="aspect-video h-full w-full"
+                  />
+                );
+                if (!p.live) return thumb;
+                return (
+                  <a
+                    href={p.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Open ${p.title} in a new tab`}
+                    className="group/visit relative block overflow-hidden rounded-xl"
+                  >
+                    {thumb}
+                    <span
+                      aria-hidden="true"
+                      className="absolute right-2 top-2 z-10 grid h-8 w-8 place-items-center rounded-full border border-ink/25 bg-white/80 text-ink shadow-soft transition duration-300 group-hover/visit:scale-110 group-hover/visit:bg-ink group-hover/visit:text-paper motion-reduce:transition-none"
+                    >
+                      <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M7 17L17 7M8 7h9v9" />
+                      </svg>
+                    </span>
+                    <span className="absolute inset-0 flex items-center justify-center bg-navy/60 font-mono text-sm tracking-wide text-white opacity-0 transition-opacity duration-300 group-hover/visit:opacity-100 group-focus-visible/visit:opacity-100 motion-reduce:transition-none">
+                      visit site ↗
+                    </span>
+                  </a>
+                );
+              })()}
             </div>
 
             <div className="min-w-0 flex-1 px-2 py-2">
-              <h3 className="font-display text-lg font-semibold text-ink">{p.title}</h3>
+              <div className="flex items-center justify-between gap-3">
+                <h3 className="font-display text-lg font-semibold text-ink">{p.title}</h3>
+                {p.github && (
+                  <a
+                    href={p.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${p.title} on GitHub`}
+                    className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-ink/25 bg-white/60 text-ink transition-colors hover:bg-ink hover:text-paper"
+                  >
+                    <GithubIcon />
+                  </a>
+                )}
+              </div>
               <ul className="mt-2 flex flex-wrap gap-2" aria-label="Tech stack">
                 {p.stack.map((s) => (
                   <Pill key={s} tone="white">{s}</Pill>
@@ -795,8 +834,6 @@ function Life() {
 function Connect() {
   const [copied, setCopied] = useState(false);
 
-  // Fallback handler for email link: copies the email to clipboard when clicked
-  // and temporarily shows "Copied to clipboard!" to the user.
   const handleEmailClick = () => {
     navigator.clipboard.writeText(PROFILE.email);
     setCopied(true);
@@ -891,13 +928,11 @@ function CustomCursor() {
     >
       <div className="absolute -translate-x-1/2 -translate-y-1/2 transition-transform duration-150 ease-out">
         {isPointer ? (
-          // Hover state: Circle with a dot in it
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
             <circle cx="16" cy="16" r="10" />
             <circle cx="16" cy="16" r="2" fill="currentColor" />
           </svg>
         ) : (
-          // Default state: Schematic crosshair (Circle with lines coming out of it)
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
             <circle cx="16" cy="16" r="6" />
             <line x1="16" y1="2" x2="16" y2="8" />
