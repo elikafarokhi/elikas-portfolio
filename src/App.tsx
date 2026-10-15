@@ -532,7 +532,7 @@ function Hero() {
             />
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed">
-              I build software across the stack, from React interfaces to backend services to embedded systems, and I’m still figuring out which part I love most!
+              I build software across the stack and enjoy working close to the hardware too. I’m drawn to problems where getting the details right actually matters.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
