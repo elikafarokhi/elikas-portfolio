@@ -147,7 +147,7 @@ const NAV_ITEMS = [
   { id: "connect", label: "Connect" },
 ] as const;
 
-const NAV_IDS = NAV_ITEMS.map((n) => n.id);
+const NAV_IDS: readonly string[] = NAV_ITEMS.map((n) => n.id);
 
 const GLASS =
   "border border-white/70 bg-white/55 shadow-glass backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.06]";
