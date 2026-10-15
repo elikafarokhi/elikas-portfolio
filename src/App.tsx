@@ -532,7 +532,7 @@ function Hero() {
             />
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed">
-              I love the challenge of solving hard technical problems. My experience spans from open-source software development to hardware engineering, and I'm always eager to take on new projects to grow my skill set!
+              I build software across the stack, from React interfaces to backend services to embedded systems, and I’m still figuring out which part I love most!
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
