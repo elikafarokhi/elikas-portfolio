@@ -4,32 +4,27 @@
 @tailwind components;
 @tailwind utilities;
 
-/* -------------------------------------------------------------------------
- * THEME TOKENS: RGB channels, so Tailwind opacity modifiers (bg-ink/30) work.
- * Light = pink paper + navy ink. Dark = the exact opposite.
- * Edit these numbers to retune either mode.
- * ---------------------------------------------------------------------- */
 :root {
-  --paper: 254 237 242; /* #FEEDF2 */
-  --ink: 27 42 78; /* #1B2A4E */
-  --ink-soft: 44 62 107; /* #2C3E6B */
-  --ink-muted: 86 103 154; /* #56679A */
+  --paper: 254 237 242;
+  --ink: 27 42 78;
+  --ink-soft: 44 62 107;
+  --ink-muted: 86 103 154;
   --tint: 252 221 231;
   --tint-edge: 249 198 215;
-  --featured: 254 250 232; /* pale butter-100 */
-  --featured-edge: 252 247 216; /* butter-200 */
+  --featured: 254 250 232;
+  --featured-edge: 252 247 216;
   color-scheme: light;
 }
 
 .dark {
-  --paper: 17 28 56; /* #111C38 */
-  --ink: 254 237 242; /* #FEEDF2 */
+  --paper: 17 28 56;
+  --ink: 254 237 242;
   --ink-soft: 240 211 222;
   --ink-muted: 214 172 194;
   --tint: 30 44 84;
   --tint-edge: 52 68 112;
   --featured: 40 44 68;
-  --featured-edge: 138 121 84; /* muted, paler gold */
+  --featured-edge: 138 121 84;
   color-scheme: dark;
 }
 
@@ -38,36 +33,21 @@
     -webkit-text-size-adjust: 100%;
   }
 
-  /* Plain CSS on purpose (no @apply), so this file builds even before the
-     colour tokens in tailwind.config.js are picked up. */
   body {
     background-color: rgb(var(--paper));
     color: rgb(var(--ink-soft));
     font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-    font-weight: 400; /* headings use font-medium/font-semibold, never bold, to stay lean */
-    /* text-transform: lowercase; the whole site reads lowercase, on purpose */
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Visible keyboard focus everywhere (follows the theme). */
   :focus-visible {
     outline: 2px solid rgb(var(--ink));
     outline-offset: 3px;
   }
 }
 
-/* -------------------------------------------------------------------------
- * CUSTOM CURSOR: matches the schematic/terminal concept.
- *   Default -> a small crosshair with an open centre, like a test-point
- *              marker on a circuit diagram (or a CAD/schematic tool cursor).
- *   Hover   -> a filled "solder pad" node with a butter-yellow ring, for
- *              anything clickable (links, buttons, form controls).
- * Both flip colour with the theme (navy in light mode, pink in dark mode);
- * the yellow ring on the hover cursor stays constant in both, tying back to
- * the accent colour used for sticky notes and tags elsewhere on the site.
- * To turn this off, delete this block; the browser's normal pointer returns.
- * ---------------------------------------------------------------------- */
 html, body {
   cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48ZyBmaWxsPSJub25lIiBzdHJva2U9IiMxQjJBNEUiIHN0cm9rZS13aWR0aD0iMS42IiBzdHJva2UtbGluZWNhcD0icm91bmQiPjxsaW5lIHgxPSIxMiIgeTE9IjEiIHgyPSIxMiIgeTI9IjgiLz48bGluZSB4MT0iMTIiIHkxPSIxNiIgeDI9IjEyIiB5Mj0iMjMiLz48bGluZSB4MT0iMSIgeTE9IjEyIiB4Mj0iOCIgeTI9IjEyIi8+PGxpbmUgeDE9IjE2IiB5MT0iMTIiIHgyPSIyMyIgeTI9IjEyIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMy40Ii8+PC9nPjwvc3ZnPg==') 12 12, crosshair;
 }
@@ -82,7 +62,6 @@ html.dark select, html.dark textarea, html.dark summary, html.dark label {
   cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSI2IiBmaWxsPSIjRkVFREYyIiBzdHJva2U9IiNGQ0Y2Q0EiIHN0cm9rZS13aWR0aD0iMS42Ii8+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMS40IiBmaWxsPSIjRkNGNkNBIi8+PC9zdmc+') 12 12, pointer;
 }
 
-/* Briefly added to <html> while switching theme so colours cross-fade. */
 .theme-fade,
 .theme-fade *,
 .theme-fade *::before,
