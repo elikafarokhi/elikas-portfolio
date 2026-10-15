@@ -1,75 +1,38 @@
-# React + TypeScript + Vite
+# Elika Farokhi | Personal Portfolio 🌸
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Here is the source code for my personal website, built to showcase my software and hardware projects, work experience, and what I'm up to outside of classes. 
 
-Currently, two official plugins are available:
+You can check out the live site here: [Add your Vercel link here once deployed]
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## The Design
+The UI is designed to feel like an engineer's notebook crossed with a schematic. It features a custom CAD-style crosshair cursor that intelligently inverts based on the background color, a custom light/dark mode toggle, and a responsive bento-grid layout. 
 
-## React Compiler
+## Tech Stack
+* **Frontend:** React, TypeScript
+* **Styling:** Tailwind CSS
+* **Build Tool:** Vite
+* **Deployment:** Vercel
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Running Locally
+If you want to poke around the code or run this project on your own machine:
 
-## Expanding the ESLint configuration
+1. Clone the repo:
+   ```bash
+   git clone [https://github.com/elikafarokhi/elikas-portfolio.git](https://github.com/elikafarokhi/elikas-portfolio.git)
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Let's Connect
+I'm currently a Computer Engineering student at the University of Waterloo, actively looking for a Summer 2027 software engineering internship! 
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+If your team is hiring, you're building something cool, or you just want to trade restaurant recommendations, feel free to reach out.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+* [Email](mailto:efarokhi@uwaterloo.ca)
+* [LinkedIn](https://www.linkedin.com/in/elika-farokhi)
