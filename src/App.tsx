@@ -66,15 +66,15 @@ const EXPERIENCE: Job[] = [
     company: "Easier Emails",
     role: "Software Engineer",
     description:
-      "Redesigned the campaign management UI for a SaaS platform to include real-time validation and progress tracking. Boosted overall email delivery rates by 15% by tracking down and fixing complex cross-browser bugs and tricky timezone issues.",
-    stack: ["SaaS", "UI Development", "Web Compatibility"],
+      "Redesigned the campaign management UI for a SaaS email platform, adding real-time validation and progress tracking. Fixed cross-browser and timezone bugs that were breaking scheduled sends, raising email delivery rates by 15%.",
+    stack: ["React", "JavaScript", "CSS"],
   },
   {
     dates: "June 2023 to June 2026",
     company: "Stork Family YMCA",
     role: "Head Lifeguard",
     description:
-      "Kept the community safe by managing daily pool operations and leading a team of over 15 lifeguards. Taught swimming lessons to 500+ participants of all ages while co-hosting seasonal emergency training sessions.",
+      "Led a team of 15+ lifeguards while actively guarding and managing daily pool operations. Taught swimming to 500+ participants of all ages and co-led seasonal emergency training for staff.",
     stack: ["Leadership", "Teaching", "Teamwork"],
   },
 ];
