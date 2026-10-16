@@ -942,7 +942,7 @@ function Connect() {
               className="font-hand text-6xl leading-none text-paper sm:text-7xl md:text-8xl"
             />
             <p className="mt-6 max-w-md text-lg leading-relaxed text-paper/80">
-              Looking for my next co-op for Summer 2027! Reach out if you have an open role, a fun side project, or a great restaurant rec!
+              Looking for my next co-op for Summer 2027! Reach out if you have an open role, a fun side project, or just want to chat!
             </p>
           </div>
 
