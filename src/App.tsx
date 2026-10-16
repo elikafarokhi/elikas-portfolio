@@ -801,12 +801,12 @@ function Projects() {
 function Life() {
   return (
     <Section id="life" title="Life Unplugged" intro="Everything else that makes me, me! (Hover over the polaroids!)" end>
-      <ul className="mx-auto grid max-w-4xl grid-cols-2 gap-x-5 gap-y-9 sm:gap-x-8 md:grid-cols-3 md:gap-y-12">
+      <ul className="mx-auto grid max-w-sm grid-cols-2 gap-x-6 gap-y-10 sm:max-w-xl sm:gap-x-10 md:max-w-4xl md:grid-cols-3 md:gap-x-32 md:gap-y-16">
         {LIFE_PHOTOS.map((ph) => (
           <li key={ph.title} className={ph.nudge}>
             <button
               type="button"
-              className={`group relative block w-full rounded-sm bg-white p-2 pb-[2.625rem] text-left shadow-soft outline-none transition duration-300 hover:z-10 hover:rotate-0 hover:scale-102 focus-visible:z-10 focus-visible:rotate-0 focus-visible:ring-2 focus-visible:ring-navy motion-reduce:transition-none ${ph.tilt}`}
+              className={`group relative block w-full rounded-sm bg-white p-1.5 pb-8 text-left shadow-soft outline-none transition duration-300 hover:z-10 hover:rotate-0 hover:scale-102 focus-visible:z-10 focus-visible:rotate-0 focus-visible:ring-2 focus-visible:ring-navy motion-reduce:transition-none ${ph.tilt}`}
             >
               <Tape className="-top-3 left-1/2 -translate-x-1/2 rotate-2" />
 
@@ -817,9 +817,9 @@ function Life() {
                   <ImagePlaceholder label="Photo" tone="pink" className="aspect-[4/5] w-full !rounded-sm" />
                 )}
 
-                <span className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-navy/75 p-4 text-center text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none">
-                  <span className="font-hand text-2xl leading-none">{ph.title}</span>
-                  <span className="text-sm leading-snug text-white/90">{ph.text}</span>
+                <span className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-navy/75 p-3 text-center text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none">
+                  <span className="font-hand text-xl leading-none">{ph.title}</span>
+                  <span className="text-xs leading-snug text-white/90 sm:text-sm">{ph.text}</span>
                 </span>
               </span>
             </button>
