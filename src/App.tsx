@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { ReactNode } from "react";
+import type { MouseEvent as ReactMouseEvent, ReactNode } from "react";
 
 const PROFILE_PHOTO_1 = "/IMG_0035.jpg";
 const PROFILE_PHOTO_2: string | null = "/IMG_0036.jpg";
@@ -124,11 +124,11 @@ interface LifePhoto {
   nudge: string;
 }
 const LIFE_PHOTOS: LifePhoto[] = [
-  { src: "/golf.jpg", title: "Golf!", text: "My favourite excuse to go outside, nothing beats a nine and dine :)", tilt: "-rotate-3", nudge: "" },
+  { src: "/golf.jpg", title: "Golf!", text: "My favourite excuse to go outside, nothing beats a nine and dine!", tilt: "-rotate-3", nudge: "" },
   { src: "/luna.jpg", title: "Luna!", text: "My husky-labradoodle mix and the main reason I actually touch grass. We love our forest walks :)", tilt: "rotate-2", nudge: "md:translate-y-6" },
-  { src: "/bigsur.jpeg", title: "Travelling!", text: "Always plotting my next trip, trying to see as much of the world as my student budget will allow :)", tilt: "-rotate-1", nudge: "md:-translate-y-2" },
+  { src: "/bigsur.jpeg", title: "Travelling!", text: "Always plotting my next trip, trying to see as much of the world as my student budget will allow!", tilt: "-rotate-1", nudge: "md:-translate-y-2" },
   { src: "/snowboard.jpeg", title: "Snowboarding!", text: "Surviving the winter with my Ikon pass. Getting out to the mountains cures just about anything :)", tilt: "rotate-3", nudge: "md:translate-y-2" },
-  { src: "/concert.jpeg", title: "Concerts!", text: "Whenever I need a break from my laptop, I make it my mission to hear my favorite Spotify playlists in real life :)", tilt: "-rotate-2", nudge: "md:-translate-y-4" },
+  { src: "/concert.jpeg", title: "Concerts!", text: "Whenever I need a break from my laptop, I make it my mission to hear my favorite Spotify playlists in real life!", tilt: "-rotate-2", nudge: "md:-translate-y-4" },
   { src: "/strawberry.jpeg", title: "Food!", text: "I'm always thinking about my next meal. Sharing good food is my absolute favorite way to connect :)", tilt: "rotate-1", nudge: "md:translate-y-4" },
 ];
 
@@ -451,32 +451,61 @@ function Section({
   );
 }
 
-function Nav({ active, theme, onToggleTheme }: { active: string; theme: Theme; onToggleTheme: () => void }) {
+function MenuIcon({ open }: { open: boolean }) {
   return (
-    <header className="fixed inset-x-0 top-3 z-50 px-3 sm:top-4 sm:px-6">
+    <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" aria-hidden="true">
+      {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+    </svg>
+  );
+}
+
+function Nav({ active, theme, onToggleTheme }: { active: string; theme: Theme; onToggleTheme: () => void }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const activeLabel = NAV_ITEMS.find((n) => n.id === active)?.label ?? NAV_ITEMS[0].label;
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenuOpen(false);
+    const onPointer = (e: PointerEvent) => {
+      if (!headerRef.current?.contains(e.target as Node)) setMenuOpen(false);
+    };
+    const onResize = () => window.matchMedia("(min-width: 768px)").matches && setMenuOpen(false);
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("pointerdown", onPointer);
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("pointerdown", onPointer);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [menuOpen]);
+
+  const go = (id: string) => (e: ReactMouseEvent) => {
+    e.preventDefault();
+    setMenuOpen(false);
+    scrollToSection(id);
+  };
+
+  return (
+    <header ref={headerRef} className="fixed inset-x-0 top-3 z-50 px-3 sm:top-4 sm:px-6">
       <nav aria-label="Primary" className={`mx-auto flex max-w-3xl items-center gap-2 rounded-full p-1.5 ${GLASS}`}>
         <a
           href="#about"
           aria-label="Back to top"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToSection("about");
-          }}
+          onClick={go("about")}
           className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-ink font-mono text-sm font-medium tracking-wide text-paper"
         >
           {PROFILE.initials}
         </a>
 
-        <ul className="flex flex-1 items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:justify-end">
+        <ul className="hidden flex-1 items-center justify-end gap-1 md:flex">
           {NAV_ITEMS.map(({ id, label }) => (
             <li key={id}>
               <a
                 href={`#${id}`}
                 aria-current={active === id ? "true" : undefined}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection(id);
-                }}
+                onClick={go(id)}
                 className={`block whitespace-nowrap rounded-full px-3.5 py-2 font-mono text-[13px] font-medium tracking-wide transition-colors ${
                   active === id ? "bg-ink text-paper" : "text-ink hover:bg-ink/10"
                 }`}
@@ -487,6 +516,10 @@ function Nav({ active, theme, onToggleTheme }: { active: string; theme: Theme; o
           ))}
         </ul>
 
+        <span aria-hidden="true" className="flex-1 truncate px-2 font-mono text-[13px] font-medium tracking-wide text-ink md:hidden">
+          {activeLabel}
+        </span>
+
         <button
           type="button"
           onClick={onToggleTheme}
@@ -496,7 +529,41 @@ function Nav({ active, theme, onToggleTheme }: { active: string; theme: Theme; o
         >
           {theme === "dark" ? <SunIcon /> : <MoonIcon />}
         </button>
+
+        <button
+          type="button"
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+          className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-ink text-paper md:hidden"
+        >
+          <MenuIcon open={menuOpen} />
+        </button>
       </nav>
+
+      {menuOpen && (
+        <ul
+          id="mobile-menu"
+          className="mx-auto mt-2 max-w-3xl rounded-3xl border border-white/70 bg-paper/90 p-2 shadow-glass backdrop-blur-xl dark:border-white/10 md:hidden"
+        >
+          {NAV_ITEMS.map(({ id, label }, i) => (
+            <li key={id}>
+              <a
+                href={`#${id}`}
+                aria-current={active === id ? "true" : undefined}
+                onClick={go(id)}
+                className={`flex items-center gap-3 rounded-2xl px-4 py-3 font-mono text-[15px] font-medium tracking-wide transition-colors ${
+                  active === id ? "bg-ink text-paper" : "text-ink hover:bg-ink/10"
+                }`}
+              >
+                <span className="text-[11px] opacity-60">{String(i + 1).padStart(2, "0")}</span>
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
     </header>
   );
 }
@@ -799,6 +866,8 @@ function Projects() {
 }
 
 function Life() {
+  const [openPhoto, setOpenPhoto] = useState<string | null>(null);
+
   return (
     <Section id="life" title="Life Unplugged" intro="Everything else that makes me, me! (Hover over the polaroids)" end>
       <ul className="mx-auto grid max-w-sm grid-cols-2 gap-x-6 gap-y-10 sm:max-w-xl sm:gap-x-10 md:max-w-4xl md:grid-cols-3 md:gap-x-32 md:gap-y-16">
@@ -806,6 +875,8 @@ function Life() {
           <li key={ph.title} className={ph.nudge}>
             <button
               type="button"
+              aria-expanded={openPhoto === ph.title}
+              onClick={() => setOpenPhoto((o) => (o === ph.title ? null : ph.title))}
               className={`group relative block w-full rounded-sm bg-white p-1.5 pb-8 text-left shadow-soft outline-none transition duration-300 hover:z-10 hover:rotate-0 hover:scale-102 focus-visible:z-10 focus-visible:rotate-0 focus-visible:ring-2 focus-visible:ring-navy motion-reduce:transition-none ${ph.tilt}`}
             >
               <Tape className="-top-3 left-1/2 -translate-x-1/2 rotate-2" />
@@ -817,7 +888,9 @@ function Life() {
                   <ImagePlaceholder label="Photo" tone="pink" className="aspect-[4/5] w-full !rounded-sm" />
                 )}
 
-                <span className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-navy/75 p-3 text-center text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none">
+                <span className={`absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-navy/75 p-3 text-center text-white transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none ${
+                    openPhoto === ph.title ? "opacity-100" : "opacity-0"
+                  }`}>
                   <span className="font-hand text-xl leading-none">{ph.title}</span>
                   <span className="text-xs leading-snug text-white/90 sm:text-sm">{ph.text}</span>
                 </span>
@@ -921,7 +994,7 @@ function CustomCursor() {
 
   return (
     <div
-      className={`pointer-events-none fixed inset-0 z-[100000] hidden sm:block ${color}`}
+      className={`pointer-events-none fixed inset-0 z-[100000] hidden mouse:block ${color}`}
       style={{ transform: `translate3d(${pos.x}px, ${pos.y}px, 0)` }}
     >
       <div className="absolute -translate-x-1/2 -translate-y-1/2 transition-transform duration-150 ease-out">
@@ -949,7 +1022,7 @@ export default function App() {
   const { theme, toggle } = useTheme();
 
   return (
-    <div className="relative overflow-x-clip bg-paper bg-grid bg-[length:32px_32px] text-ink-soft sm:cursor-none [&_a]:sm:cursor-none [&_button]:sm:cursor-none">
+    <div className="relative overflow-x-clip bg-paper bg-grid bg-[length:32px_32px] text-ink-soft mouse:cursor-none [&_a]:mouse:cursor-none [&_button]:mouse:cursor-none">
       <CustomCursor />
       <ScrollProgress />
       <Nav active={active} theme={theme} onToggleTheme={toggle} />
