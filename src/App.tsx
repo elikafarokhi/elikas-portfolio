@@ -126,7 +126,7 @@ interface LifePhoto {
 }
 const LIFE_PHOTOS: LifePhoto[] = [
   { src: "/golf.jpg", title: "Golf!", text: "My favourite excuse to go outside, nothing beats a nine and dine!", tilt: "-rotate-3", nudge: "" },
-  { src: "/luna.jpg", title: "Luna!", text: "My husky-labradoodle mix and the main reason I actually touch grass. We love our forest walks :)", tilt: "rotate-2", nudge: "md:translate-y-6" },
+  { src: "/luna.jpg", title: "Luna!", text: "My husky-labradoodle mix and my best friend. We love our forest walks :)", tilt: "rotate-2", nudge: "md:translate-y-6" },
   { src: "/bigsur.jpeg", title: "Travelling!", text: "Always plotting my next trip, trying to see as much of the world as my student budget will allow!", tilt: "-rotate-1", nudge: "md:-translate-y-2" },
   { src: "/snowboard.jpeg", title: "Snowboarding!", text: "Surviving the winter with my Ikon pass. Getting out to the mountains cures just about anything :)", tilt: "rotate-3", nudge: "md:translate-y-2" },
   { src: "/concert.jpeg", title: "Concerts!", text: "Whenever I need a break from my laptop, I make it my mission to hear my favorite Spotify playlists in real life!", tilt: "-rotate-2", nudge: "md:-translate-y-4" },
