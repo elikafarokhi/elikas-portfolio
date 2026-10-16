@@ -442,11 +442,11 @@ function Section({
 }) {
   return (
     <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-20 px-5 sm:px-8">
-      <div className="relative mx-auto max-w-6xl py-20 pl-9 md:py-28 md:pl-16">
+      <div className="relative mx-auto max-w-6xl py-12 pl-9 md:py-16 md:pl-16">
         <Trace end={end} />
         <SectionHeading id={id} title={title} index={NAV_IDS.indexOf(id) + 1} />
         {intro && <p className="mt-3 max-w-xl text-lg text-ink-muted">{intro}</p>}
-        <div className="mt-10">{children}</div>
+        <div className="mt-8">{children}</div>
       </div>
     </section>
   );
@@ -581,7 +581,7 @@ function ScrollProgress() {
 function Hero() {
   return (
     <section id="about" aria-labelledby="about-title" className="scroll-mt-20 px-5 sm:px-8">
-      <div className="relative mx-auto max-w-6xl pb-16 pl-9 pt-32 md:pb-24 md:pl-16 md:pt-40">
+      <div className="relative mx-auto max-w-6xl pb-10 pl-9 pt-32 md:pb-14 md:pl-16 md:pt-40">
         <span
           aria-hidden="true"
           className="absolute bottom-0 left-0 top-0 w-px origin-top bg-ink/30 motion-safe:animate-trace"
