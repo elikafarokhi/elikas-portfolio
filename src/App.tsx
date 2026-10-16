@@ -40,6 +40,8 @@ interface Job {
   role: string;
   description: string;
   stack: string[];
+  links?: { label: string; href: string; ariaLabel: string }[];
+  people?: string;
 }
 const EXPERIENCE: Job[] = [
   {
@@ -54,9 +56,22 @@ const EXPERIENCE: Job[] = [
     dates: "January 2026 to May 2026",
     company: "University of Waterloo",
     role: "Research Assistant (USRA)",
+    people: "with Dr. Mehrdad Pirnia & Dr. Elham Soufiani",
     description:
-      "Compiled fleet, route, and airport data for 10 Canadian regional airlines and helped optimize which short-haul flights could be electrified first. Built a React and TypeScript site showcasing the university’s electric aviation research.",
+      "Compiled fleet, route, and airport data for 10 Canadian regional airlines and gathered research sources for an electric aircraft optimization model. Wrote the introduction and was acknowledged in the resulting paper. Built a React and TypeScript site showcasing the university's electric aviation research.",
     stack: ["React", "TypeScript", "Data Analysis", "Optimization"],
+    links: [
+      {
+        label: "Read the paper",
+        href: "https://arxiv.org/html/2606.28312v1",
+        ariaLabel: "Read the paper: Optimal Deployment of Electric Aircraft for Canadian Domestic Flights",
+      },
+      {
+        label: "Visit the site",
+        href: "https://mpirnia.com",
+        ariaLabel: "Visit mpirnia.com, the electric aviation research site I built",
+      },
+    ],
   },
   {
     dates: "July 2025 to January 2026",
@@ -768,8 +783,43 @@ function Experience() {
             </div>
 
             <div>
-              <h3 className="font-display text-xl font-semibold text-ink">{job.role}</h3>
+              <div className="flex flex-wrap items-baseline gap-x-2.5">
+                <h3 className="font-display text-xl font-semibold text-ink">{job.role}</h3>
+                {job.people && <p className="text-sm italic text-ink-muted">{job.people}</p>}
+              </div>
               <p className="mt-2 text-sm leading-relaxed">{job.description}</p>
+              {job.links && (
+                <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+                  {job.links.map((l) => (
+                    <a
+                      key={l.href}
+                      href={l.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={l.ariaLabel}
+                      className="group/link inline-flex items-center gap-1 font-mono text-xs tracking-wide text-ink-muted transition-colors hover:text-ink motion-reduce:transition-none"
+                    >
+                      <span className="underline decoration-transparent underline-offset-4 transition-colors group-hover/link:decoration-current">
+                        {l.label}
+                      </span>
+                      <svg
+                        aria-hidden="true"
+                        width={11}
+                        height={11}
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2.25}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="transition-transform duration-300 group-hover/link:-translate-y-px group-hover/link:translate-x-px motion-reduce:transition-none"
+                      >
+                        <path d="M7 17L17 7M8 7h9v9" />
+                      </svg>
+                    </a>
+                  ))}
+                </div>
+              )}
               <ul className="mt-4 flex flex-wrap gap-2" aria-label="Tech stack">
                 {job.stack.map((s) => (
                   <Pill key={s}>{s}</Pill>
