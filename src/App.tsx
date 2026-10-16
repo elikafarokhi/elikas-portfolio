@@ -45,7 +45,7 @@ const EXPERIENCE: Job[] = [
     company: "Mercury Mortgages",
     role: "Software Developer",
     description:
-      "Developing full-stack features for internal financial and trade software. Currently focused on upgrading the invoice management system by building out payment batch processing, vendor verification, and manual date-tracking workflows",
+      "Developing full-stack features for internal financial and trade software. Currently focused on upgrading the invoice management system by building out payment batch processing, vendor verification, and manual date-tracking workflows.",
     stack: ["React", "Python", "SQL", "Docker"],
   },
   {
