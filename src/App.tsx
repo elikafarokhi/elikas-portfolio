@@ -24,9 +24,6 @@ const EDUCATION = [
     end: "2030",
     note: "University of Waterloo President’s Scholarship of Distinction Recipient.",
     highlights: [
-      "ECE 150 - Programming Fundamentals",
-      "ECE 108 - Discrete Mathematics and Logic 1",
-      "ECE 124 - Digital Circuits and Systems",
     ],
   },
 ];
