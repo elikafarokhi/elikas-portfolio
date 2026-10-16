@@ -27,9 +27,14 @@ const EDUCATION = [
       "ECE 150 - Programming Fundamentals",
       "ECE 108 - Discrete Mathematics and Logic 1",
       "ECE 124 - Digital Circuits and Systems",
-      "DELF B1",
     ],
   },
+];
+
+const LANGUAGES = [
+  { name: "English" },
+  { name: "Farsi" },
+  { name: "French", note: "DELF B1" },
 ];
 
 interface Job {
@@ -598,7 +603,7 @@ function Hero() {
             />
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed">
-            I’m focused on full-stack development and care about the whole picture, from how data is stored and moved to how the interface feels to the person using it!
+            I’m focused on full-stack development and care about the whole picture, from how data is stored and moved to how the interface feels to the person using it.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -733,6 +738,18 @@ function Education() {
             <TermTimeline start={ed.start} end={ed.end} current={CURRENT_TERM_INDEX} />
           </article>
         ))}
+
+        <div className="flex flex-col gap-3 rounded-2xl border border-tint-edge bg-tint/70 px-6 py-4 shadow-soft sm:flex-row sm:items-center sm:gap-5 sm:px-8">
+          <h3 className="font-mono text-xs font-medium uppercase tracking-widest text-ink-muted">Languages</h3>
+          <ul className="flex flex-wrap gap-2" aria-label="Spoken languages">
+            {LANGUAGES.map((l) => (
+              <Pill key={l.name} tone="white">
+                {l.name}
+                {l.note && <span className="ml-1.5 text-ink-muted">· {l.note}</span>}
+              </Pill>
+            ))}
+          </ul>
+        </div>
       </div>
     </Section>
   );
