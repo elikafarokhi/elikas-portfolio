@@ -113,7 +113,6 @@ const PROJECTS: Project[] = [
     stack: ["React", "TypeScript", "Tailwind CSS", "Firebase"],
     tone: "yellow",
     image: "/portfolio.jpeg",
-    live: "https://elikafarokhi.vercel.app",
     github: "https://github.com/elikafarokhi/elikas-portfolio",
   },
 ];
