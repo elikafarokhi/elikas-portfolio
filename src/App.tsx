@@ -53,8 +53,8 @@ const EXPERIENCE: Job[] = [
     company: "University of Waterloo",
     role: "Research Assistant (USRA)",
     description:
-      "Launched a custom web platform from scratch to showcase university electric aviation research. Mapped out Canadian regional airline fleets and flight routes to build a massive database for advanced flight models.",
-    stack: ["React", "TypeScript", "Databases"],
+      "Compiled fleet, route, and airport data for 10 Canadian regional airlines and helped optimize which short-haul flights could be electrified first. Built a React and TypeScript site showcasing the university’s electric aviation research.",
+    stack: ["React", "TypeScript", "Data Analysis", "Optimization"],
   },
   {
     dates: "July 2025 to January 2026",
@@ -87,23 +87,23 @@ interface Project {
 }
 const PROJECTS: Project[] = [
   {
+    title: "Powder Puff",
+    description: "A serverless Python app that tracks overnight snowfall at 42 ski resorts across Ontario and Quebec. Runs on Vercel with a daily cron job and a Neon Postgres database, and anyone can sign up to get styled email alerts when their mountains get a powder day.",
+    stack: ["Python", "FastAPI", "Serverless", "PostgreSQL", "Cron Jobs"],
+    tone: "yellow",
+    image: "/powderpuff.jpeg",
+    live: "https://powderpuff.vercel.app",
+    github: "https://github.com/elikafarokhi/powder-puff",
+  },
+  {
     title: "Firefighter",
     description:
       "An autonomous firefighting robot that follows walls and detects lines to navigate a maze, spots a flame with a phototransistor, and puts it out with a blower fan. I designed the circuit and wrote the PIC16F887 firmware.",
     stack: ["Embedded Systems", "Circuit Design", "Sensor Integration"],
-    tone: "yellow",
+    tone: "pink",
     featured: true,
     note: "*glambot*",
     image: "/firefighter.jpeg",
-  },
-  {
-    title: "Powder Puff",
-    description: "A serverless Python app that tracks overnight snowfall at 42 ski resorts across Ontario and Quebec. Runs on Vercel with a daily cron job and a Neon Postgres database, and anyone can sign up to get styled email alerts when their mountains get a powder day.",
-    stack: ["Python", "FastAPI", "Serverless", "PostgreSQL", "Cron Jobs"],
-    tone: "pink",
-    image: "/powderpuff.jpeg",
-    live: "https://powderpuff.vercel.app",
-    github: "https://github.com/elikafarokhi/powder-puff",
   },
   {
     title: "Portfolio",
