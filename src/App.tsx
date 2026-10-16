@@ -45,8 +45,8 @@ const EXPERIENCE: Job[] = [
     company: "Mercury Mortgages",
     role: "Software Developer",
     description:
-      "Building full-stack internal tooling and backend services that process millions of dollars for 25+ corporate clients. Keep systems reliable by automating heavy data workflows and streamlining bulk payments.",
-    stack: ["React", "SQL", "Docker"],
+      "Developing full-stack features for internal financial and trade software. Currently focused on upgrading the invoice management system by building out payment batch processing, vendor verification, and manual date-tracking workflows",
+    stack: ["React", "Python", "SQL", "Docker"],
   },
   {
     dates: "January 2026 to May 2026",
@@ -531,7 +531,7 @@ function Hero() {
             />
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed">
-            I build software and sometimes hardware. A lot of what I know I learned by trying things I wasn’t sure I could do yet :)
+            I’m focused on full-stack development and care about the whole picture, from how data is stored and moved to how the interface feels to the person using it!
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -715,7 +715,7 @@ const CHIP_PINS =
 
 function Projects() {
   return (
-    <Section id="projects" title="Projects" intro="A few things I've built for fun outside of classes and co-op :)">
+    <Section id="projects" title="Projects" intro="A few things I've built for fun outside of classes and co-op">
       <div className="space-y-5">
         {PROJECTS.map((p, i) => (
           <article
@@ -800,7 +800,7 @@ function Projects() {
 
 function Life() {
   return (
-    <Section id="life" title="Life Unplugged" intro="Everything else that makes me, me! (Hover over the polaroids!)" end>
+    <Section id="life" title="Life Unplugged" intro="Everything else that makes me, me! (Hover over the polaroids)" end>
       <ul className="mx-auto grid max-w-sm grid-cols-2 gap-x-6 gap-y-10 sm:max-w-xl sm:gap-x-10 md:max-w-4xl md:grid-cols-3 md:gap-x-32 md:gap-y-16">
         {LIFE_PHOTOS.map((ph) => (
           <li key={ph.title} className={ph.nudge}>
@@ -893,7 +893,6 @@ function Connect() {
 
         <div className="mt-14 flex flex-wrap items-center justify-between gap-2 border-t border-paper/20 pt-6 font-mono text-xs text-paper/60">
           <span>© {new Date().getFullYear()} {PROFILE.name}</span>
-          <span>made with a lot of pink :)</span>
         </div>
       </div>
     </footer>
