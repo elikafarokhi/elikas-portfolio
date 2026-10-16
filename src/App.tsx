@@ -451,7 +451,7 @@ function Section({
 }: {
   id: string;
   title: string;
-  intro?: string;
+  intro?: ReactNode;
   end?: boolean;
   children: ReactNode;
 }) {
@@ -932,7 +932,12 @@ function Life() {
   const [openPhoto, setOpenPhoto] = useState<string | null>(null);
 
   return (
-    <Section id="life" title="Life Unplugged" intro="Everything else that makes me, me! (Hover over the polaroids)" end>
+    <Section id="life" title="Life Unplugged" intro={
+        <>
+          Everything else that makes me, me! (<span className="[@media(hover:hover)_and_(pointer:fine)]:hidden">Tap on</span>
+          <span className="hidden [@media(hover:hover)_and_(pointer:fine)]:inline">Hover over</span> the polaroids)
+        </>
+      } end>
       <ul className="mx-auto grid max-w-sm grid-cols-2 gap-x-6 gap-y-10 sm:max-w-xl sm:gap-x-10 md:max-w-4xl md:grid-cols-3 md:gap-x-32 md:gap-y-16">
         {LIFE_PHOTOS.map((ph) => (
           <li key={ph.title} className={ph.nudge}>
