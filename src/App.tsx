@@ -108,7 +108,7 @@ const PROJECTS: Project[] = [
     image: "/firefighter.jpeg",
   },
   {
-    title: "Portfolio",
+    title: "Personal Portfolio",
     description: "The website you're looking at right now! Built from scratch to showcase my experience, featuring a custom interactive UI and real-time content updates.",
     stack: ["React", "TypeScript", "Tailwind CSS", "Firebase"],
     tone: "yellow",
