@@ -385,7 +385,7 @@ function RevealHeading({
           observer.disconnect();
         }
       },
-      { threshold: 0.6 }
+      { threshold: 0.1 }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -395,7 +395,7 @@ function RevealHeading({
     <Tag id={id} className={className}>
       <span
         ref={ref}
-        className={`inline-block transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none ${
+        className={`inline-block transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none ${
           shown ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
         }`}
       >
@@ -527,7 +527,6 @@ function Hero() {
               as="h1"
               id="about-title"
               text={PROFILE.name}
-              delay={700}
               className="mt-4 font-display text-5xl font-semibold leading-[1.02] tracking-tight text-ink sm:text-6xl lg:text-7xl"
             />
 

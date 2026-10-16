@@ -65,7 +65,7 @@ export default {
         },
       },
       animation: {
-        trace: "trace 1.8s cubic-bezier(0.65, 0, 0.35, 1) both",
+        trace: "trace 0.6s cubic-bezier(0.65, 0, 0.35, 1) both",
       },
     },
   },
