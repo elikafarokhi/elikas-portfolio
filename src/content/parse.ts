@@ -94,6 +94,7 @@ export function parseProject(id: string, d: Raw): Project | null {
     live: optStr(d.live),
     github: optStr(d.github),
     drive: optStr(d.drive),
+    devpost: optStr(d.devpost),
   };
 }
 

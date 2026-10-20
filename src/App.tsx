@@ -176,6 +176,13 @@ function FolderIcon() {
     </svg>
   );
 }
+function TrophyIcon() {
+  return (
+    <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8M10 17h4" />
+    </svg>
+  );
+}
 function SunIcon() {
   return (
     <svg {...iconProps}>
@@ -798,7 +805,7 @@ function Projects({ items }: { items: Project[] }) {
             <div className="min-w-0 flex-1 px-2 py-2">
               <div className="flex items-center justify-between gap-3">
                 <h3 className="font-display text-lg font-semibold text-ink">{p.title}</h3>
-                {(p.github || p.drive) && (
+                {(p.github || p.drive || p.devpost) && (
                   <div className="flex shrink-0 gap-2">
                     {p.github && (
                       <a
@@ -820,6 +827,17 @@ function Projects({ items }: { items: Project[] }) {
                         className={PROJECT_LINK}
                       >
                         <FolderIcon />
+                      </a>
+                    )}
+                    {p.devpost && (
+                      <a
+                        href={p.devpost}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${p.title} on Devpost`}
+                        className={PROJECT_LINK}
+                      >
+                        <TrophyIcon />
                       </a>
                     )}
                   </div>

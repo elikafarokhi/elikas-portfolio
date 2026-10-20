@@ -68,6 +68,7 @@ export interface Project extends Doc {
   live?: string;
   github?: string;
   drive?: string;
+  devpost?: string;
 }
 
 export interface LifePhoto extends Doc {

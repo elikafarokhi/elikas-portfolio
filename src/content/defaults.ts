@@ -100,6 +100,7 @@ export const DEFAULT_CONTENT: SiteContent = {
       note: "*Hack the Valley 11 winner*",
       image: "/bathroombestie.jpeg",
       github: "https://github.com/emilyyu07/bathroom-bestie",
+      devpost: "https://devpost.com/software/bathroombestie",
     },
     {
       id: "firefighter",

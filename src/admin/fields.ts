@@ -77,6 +77,7 @@ export const CONFIGS: Record<CollectionName, CollectionConfig> = {
       { key: "live", label: "Live site URL", kind: "text", hint: "Optional. Makes the thumbnail link to the site." },
       { key: "github", label: "GitHub URL", kind: "text" },
       { key: "drive", label: "Google Drive URL", kind: "text", hint: "Optional. Shows a folder button next to the title." },
+      { key: "devpost", label: "Devpost URL", kind: "text", hint: "Optional. Shows a trophy button next to the title." },
       { key: "featured", label: "Featured (show sticky note)", kind: "checkbox" },
       { key: "note", label: "Sticky note text", kind: "text", hint: "Only shown when Featured is ticked." },
     ],
