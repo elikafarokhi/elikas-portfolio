@@ -807,6 +807,17 @@ function Projects({ items }: { items: Project[] }) {
                 <h3 className="font-display text-lg font-semibold text-ink">{p.title}</h3>
                 {(p.github || p.drive || p.devpost) && (
                   <div className="flex shrink-0 gap-2">
+                    {p.devpost && (
+                      <a
+                        href={p.devpost}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${p.title} on Devpost`}
+                        className={PROJECT_LINK}
+                      >
+                        <TrophyIcon />
+                      </a>
+                    )}
                     {p.github && (
                       <a
                         href={p.github}
@@ -827,17 +838,6 @@ function Projects({ items }: { items: Project[] }) {
                         className={PROJECT_LINK}
                       >
                         <FolderIcon />
-                      </a>
-                    )}
-                    {p.devpost && (
-                      <a
-                        href={p.devpost}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${p.title} on Devpost`}
-                        className={PROJECT_LINK}
-                      >
-                        <TrophyIcon />
                       </a>
                     )}
                   </div>
