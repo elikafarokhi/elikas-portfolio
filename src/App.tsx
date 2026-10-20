@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { MouseEvent as ReactMouseEvent, ReactNode } from "react";
+import { TERMS, type Education as EducationEntry, type Job, type LifePhoto, type Project, type Term } from "./content/types.ts";
+import { useContent } from "./content/useContent.ts";
+import { GLASS } from "./styles.ts";
 
 const PROFILE_PHOTO_1 = "/IMG_0035.jpg";
 const PROFILE_PHOTO_2: string | null = "/IMG_0036.jpg";
@@ -13,139 +16,10 @@ const PROFILE = {
   github: "https://github.com/elikafarokhi",
 };
 
-const TERMS = ["1A", "1B", "2A", "2B", "3A", "3B", "4A", "4B"] as const;
-const CURRENT_TERM_INDEX = 2;
-
-const EDUCATION = [
-  {
-    school: "University of Waterloo",
-    degree: "Computer Engineering",
-    start: "2025",
-    end: "2030",
-    note: "University of Waterloo President’s Scholarship of Distinction Recipient.",
-    highlights: [
-    ],
-  },
-];
-
 const LANGUAGES = [
   { name: "English" },
   { name: "Farsi" },
   { name: "French", note: "DELF B1" },
-];
-
-interface Job {
-  dates: string;
-  company: string;
-  role: string;
-  description: string;
-  stack: string[];
-  links?: { label: string; href: string; ariaLabel: string }[];
-  people?: string;
-}
-const EXPERIENCE: Job[] = [
-  {
-    dates: "September 2026 to Present",
-    company: "Mercury Mortgages",
-    role: "Software Developer",
-    description:
-      "Developing full-stack features for internal financial and trade software. Currently focused on upgrading the invoice management system by building out payment batch processing, vendor verification, and manual date-tracking workflows.",
-    stack: ["React", "Python", "SQL", "Docker"],
-  },
-  {
-    dates: "January 2026 to May 2026",
-    company: "University of Waterloo",
-    role: "Research Assistant (USRA)",
-    people: "with Dr. Mehrdad Pirnia & Dr. Elham Soufiani",
-    description:
-      "Compiled fleet, route, and airport data for 10 Canadian regional airlines and gathered research sources for an electric aircraft optimization model. Wrote the introduction and was acknowledged in the resulting paper. Built a React and TypeScript site showcasing the university's electric aviation research.",
-    stack: ["React", "TypeScript", "Data Analysis", "Optimization"],
-    links: [
-      {
-        label: "Read the paper",
-        href: "https://arxiv.org/html/2606.28312v1",
-        ariaLabel: "Read the paper: Optimal Deployment of Electric Aircraft for Canadian Domestic Flights",
-      },
-      {
-        label: "Visit the site",
-        href: "https://mpirnia.com",
-        ariaLabel: "Visit mpirnia.com, the electric aviation research site I built",
-      },
-    ],
-  },
-  {
-    dates: "July 2025 to January 2026",
-    company: "Easier Emails",
-    role: "Software Engineer",
-    description:
-      "Redesigned the campaign management UI for a SaaS email platform, adding real-time validation and progress tracking. Fixed cross-browser and timezone bugs that were breaking scheduled sends, raising email delivery rates by 15%.",
-    stack: ["React", "JavaScript", "CSS"],
-  },
-  {
-    dates: "June 2023 to June 2026",
-    company: "Stork Family YMCA",
-    role: "Head Lifeguard",
-    description:
-      "Led a team of 15+ lifeguards while actively guarding and managing daily pool operations. Taught swimming to 500+ participants of all ages and co-led seasonal emergency training for staff.",
-    stack: ["Leadership", "Teaching", "Teamwork"],
-  },
-];
-
-interface Project {
-  title: string;
-  description: string;
-  stack: string[];
-  tone: "yellow" | "pink" | "white";
-  featured?: boolean;
-  note?: string;
-  image?: string;
-  live?: string;
-  github?: string;
-}
-const PROJECTS: Project[] = [
-  {
-    title: "Powder Puff",
-    description: "A serverless Python app that tracks overnight snowfall at 42 ski resorts across Ontario and Quebec. Runs on Vercel with a daily cron job and a Neon Postgres database, and anyone can sign up to get styled email alerts when their mountains get a powder day.",
-    stack: ["Python", "FastAPI", "Serverless", "PostgreSQL", "Cron Jobs"],
-    tone: "yellow",
-    image: "/powderpuff.jpeg",
-    live: "https://powderpuff.vercel.app",
-    github: "https://github.com/elikafarokhi/powder-puff",
-  },
-  {
-    title: "Firefighter",
-    description:
-      "An autonomous firefighting robot that follows walls and detects lines to navigate a maze, spots a flame with a phototransistor, and puts it out with a blower fan. I designed the circuit and wrote the PIC16F887 firmware.",
-    stack: ["Embedded Systems", "Circuit Design", "Sensor Integration"],
-    tone: "pink",
-    featured: true,
-    note: "*glambot*",
-    image: "/firefighter.jpeg",
-  },
-  {
-    title: "Personal Portfolio",
-    description: "The website you're looking at right now! Built from scratch to showcase my experience, featuring a custom interactive UI and real-time content updates.",
-    stack: ["React", "TypeScript", "Tailwind CSS", "Firebase"],
-    tone: "yellow",
-    image: "/portfolio.jpeg",
-    github: "https://github.com/elikafarokhi/elikas-portfolio",
-  },
-];
-
-interface LifePhoto {
-  src: string | null;
-  title: string;
-  text: string;
-  tilt: string;
-  nudge: string;
-}
-const LIFE_PHOTOS: LifePhoto[] = [
-  { src: "/golf.jpg", title: "Golf!", text: "My favourite excuse to go outside, nothing beats a nine and dine!", tilt: "-rotate-3", nudge: "" },
-  { src: "/luna.jpg", title: "Luna!", text: "My husky-labradoodle mix and my best friend. We love our forest walks :)", tilt: "rotate-2", nudge: "md:translate-y-6" },
-  { src: "/bigsur.jpeg", title: "Travelling!", text: "Always plotting my next trip, trying to see as much of the world as my student budget will allow!", tilt: "-rotate-1", nudge: "md:-translate-y-2" },
-  { src: "/snowboard.jpeg", title: "Snowboarding!", text: "Surviving the winter with my Ikon pass. Getting out to the mountains cures just about anything :)", tilt: "rotate-3", nudge: "md:translate-y-2" },
-  { src: "/concert.jpeg", title: "Concerts!", text: "Whenever I need a break from my laptop, I make it my mission to hear my favorite Spotify playlists in real life!", tilt: "-rotate-2", nudge: "md:-translate-y-4" },
-  { src: "/strawberry.jpeg", title: "Food!", text: "I'm always thinking about my next meal. Sharing good food is my absolute favorite way to connect :)", tilt: "rotate-1", nudge: "md:translate-y-4" },
 ];
 
 const NAV_ITEMS = [
@@ -158,9 +32,6 @@ const NAV_ITEMS = [
 ] as const;
 
 const NAV_IDS: readonly string[] = NAV_ITEMS.map((n) => n.id);
-
-const GLASS =
-  "border border-white/70 bg-white/55 shadow-glass backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.06]";
 
 const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -298,6 +169,13 @@ function GithubIcon() {
     </svg>
   );
 }
+function FolderIcon() {
+  return (
+    <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+    </svg>
+  );
+}
 function SunIcon() {
   return (
     <svg {...iconProps}>
@@ -336,6 +214,22 @@ function ImagePlaceholder({
     >
       <CameraIcon />
       <span className="px-3 text-center text-sm font-medium">{label}</span>
+    </div>
+  );
+}
+
+// Landscape shots fill a fixed 16:9 frame so every card's thumbnail matches;
+// portrait shots keep their full shape (centred) so nothing gets cropped off.
+function ProjectThumb({ src, alt }: { src: string; alt: string }) {
+  const [portrait, setPortrait] = useState(false);
+  return (
+    <div className="flex aspect-video w-full items-center justify-center">
+      <img
+        src={src}
+        alt={alt}
+        onLoad={(e) => setPortrait(e.currentTarget.naturalHeight > e.currentTarget.naturalWidth)}
+        className={`rounded-xl ${portrait ? "h-full w-auto" : "h-full w-full object-cover"}`}
+      />
     </div>
   );
 }
@@ -670,7 +564,8 @@ function Hero() {
   );
 }
 
-function TermTimeline({ start, end, current }: { start: string; end: string; current: number }) {
+function TermTimeline({ start, end, currentTerm }: { start: string; end: string; currentTerm: Term }) {
+  const current = TERMS.indexOf(currentTerm);
   const last = TERMS.length - 1;
   const pct = (i: number) => `${(i / last) * 100}%`;
   const label = `${start} to ${end}. Completed ${TERMS.slice(0, current).join(", ") || "no terms"}; now at the start of ${TERMS[current] ?? "the end"}.`;
@@ -720,20 +615,22 @@ function TermTimeline({ start, end, current }: { start: string; end: string; cur
   );
 }
 
-function Education() {
+function Education({ items }: { items: EducationEntry[] }) {
   return (
     <Section id="education" title="Education">
       <div className="space-y-5">
-        {EDUCATION.map((ed, i) => (
+        {items.map((ed) => (
           <article
-            key={i}
+            key={ed.id}
             className="grid gap-6 rounded-3xl border border-featured-edge bg-featured p-6 shadow-soft sm:p-8 md:grid-cols-[auto_1fr]"
           >
-            <img
-              src="/uwaterloo_logo.png"
-              alt={`${ed.school} Logo`}
-              className="h-28 w-28 md:h-32 md:w-32 object-contain rounded-2xl"
-            />
+            {ed.logo && (
+              <img
+                src={ed.logo}
+                alt={`${ed.school} Logo`}
+                className="h-28 w-28 md:h-32 md:w-32 object-contain rounded-2xl"
+              />
+            )}
 
             <div>
               <h3 className="font-display text-2xl font-semibold text-ink">{ed.school}</h3>
@@ -746,7 +643,7 @@ function Education() {
               </ul>
             </div>
 
-            <TermTimeline start={ed.start} end={ed.end} current={CURRENT_TERM_INDEX} />
+            <TermTimeline start={ed.start} end={ed.end} currentTerm={ed.currentTerm} />
           </article>
         ))}
 
@@ -766,12 +663,12 @@ function Education() {
   );
 }
 
-function Experience() {
+function Experience({ items }: { items: Job[] }) {
   return (
     <Section id="experience" title="Experience">
       <ol className="divide-y divide-ink/15 border-y border-ink/15">
-        {EXPERIENCE.map((job, i) => (
-          <li key={i} className="relative grid gap-4 py-8 md:grid-cols-[13rem_1fr] md:gap-12">
+        {items.map((job) => (
+          <li key={job.id} className="relative grid gap-4 py-8 md:grid-cols-[13rem_1fr] md:gap-12">
             <span
               aria-hidden="true"
               className="absolute -left-9 top-[2.3rem] h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-ink md:-left-16"
@@ -843,17 +740,20 @@ const CHIP_PINS =
   "before:absolute before:inset-y-8 before:-left-1.5 before:w-1.5 before:rounded-l-sm before:bg-pins before:opacity-40 " +
   "after:absolute after:inset-y-8 after:-right-1.5 after:w-1.5 after:rounded-r-sm after:bg-pins after:opacity-40";
 
-function Projects() {
+const PROJECT_LINK =
+  "grid h-8 w-8 place-items-center rounded-full border border-ink/25 bg-white/60 text-ink transition-colors hover:bg-ink hover:text-paper";
+
+function Projects({ items }: { items: Project[] }) {
   return (
     <Section id="projects" title="Projects" intro="A few things I've built for fun outside of classes and co-op">
       <div className="space-y-5">
-        {PROJECTS.map((p, i) => (
+        {items.map((p, i) => (
           <article
-            key={i}
+            key={p.id}
             className={`relative flex flex-col gap-4 rounded-2xl border p-3 shadow-soft transition duration-300 hover:scale-102 motion-reduce:transition-none motion-reduce:hover:transform-none sm:flex-row sm:items-center ${CHIP_PINS} ${PROJECT_TONES[p.tone].card}`}
           >
             {p.featured && p.note && (
-              <span className="absolute -top-4 right-8 z-10 rotate-2 bg-butter-300 px-3 py-1 font-hand text-xl leading-tight text-navy shadow-soft">
+              <span className={`absolute -top-4 z-10 bg-butter-300 px-3 py-1 font-hand text-xl leading-tight text-navy shadow-soft ${i % 2 ? "left-8 -rotate-2" : "right-8 rotate-2"}`}>
                 {p.note}
               </span>
             )}
@@ -861,11 +761,7 @@ function Projects() {
             <div className="shrink-0 sm:w-64">
               {(() => {
                 const thumb = p.image ? (
-                  <img
-                    src={p.image}
-                    alt={p.title}
-                    className="aspect-video h-full w-full rounded-xl object-contain"
-                  />
+                  <ProjectThumb src={p.image} alt={p.title} />
                 ) : (
                   <ImagePlaceholder
                     label="Project thumbnail"
@@ -902,16 +798,31 @@ function Projects() {
             <div className="min-w-0 flex-1 px-2 py-2">
               <div className="flex items-center justify-between gap-3">
                 <h3 className="font-display text-lg font-semibold text-ink">{p.title}</h3>
-                {p.github && (
-                  <a
-                    href={p.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${p.title} on GitHub`}
-                    className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-ink/25 bg-white/60 text-ink transition-colors hover:bg-ink hover:text-paper"
-                  >
-                    <GithubIcon />
-                  </a>
+                {(p.github || p.drive) && (
+                  <div className="flex shrink-0 gap-2">
+                    {p.github && (
+                      <a
+                        href={p.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${p.title} on GitHub`}
+                        className={PROJECT_LINK}
+                      >
+                        <GithubIcon />
+                      </a>
+                    )}
+                    {p.drive && (
+                      <a
+                        href={p.drive}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${p.title} files on Google Drive`}
+                        className={PROJECT_LINK}
+                      >
+                        <FolderIcon />
+                      </a>
+                    )}
+                  </div>
                 )}
               </div>
               <ul className="mt-2 flex flex-wrap gap-2" aria-label="Tech stack">
@@ -928,7 +839,7 @@ function Projects() {
   );
 }
 
-function Life() {
+function Life({ items }: { items: LifePhoto[] }) {
   const [openPhoto, setOpenPhoto] = useState<string | null>(null);
 
   return (
@@ -939,12 +850,12 @@ function Life() {
         </>
       } end>
       <ul className="mx-auto grid max-w-sm grid-cols-2 gap-x-6 gap-y-10 sm:max-w-xl sm:gap-x-10 md:max-w-4xl md:grid-cols-3 md:gap-x-32 md:gap-y-16">
-        {LIFE_PHOTOS.map((ph) => (
-          <li key={ph.title} className={ph.nudge}>
+        {items.map((ph) => (
+          <li key={ph.id} className={ph.nudge}>
             <button
               type="button"
-              aria-expanded={openPhoto === ph.title}
-              onClick={() => setOpenPhoto((o) => (o === ph.title ? null : ph.title))}
+              aria-expanded={openPhoto === ph.id}
+              onClick={() => setOpenPhoto((o) => (o === ph.id ? null : ph.id))}
               className={`group relative block w-full rounded-sm bg-white p-1.5 pb-8 text-left shadow-soft outline-none transition duration-300 hover:z-10 hover:rotate-0 hover:scale-102 focus-visible:z-10 focus-visible:rotate-0 focus-visible:ring-2 focus-visible:ring-navy motion-reduce:transition-none ${ph.tilt}`}
             >
               <Tape className="-top-3 left-1/2 -translate-x-1/2 rotate-2" />
@@ -957,7 +868,7 @@ function Life() {
                 )}
 
                 <span className={`absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-navy/75 p-3 text-center text-white transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none ${
-                    openPhoto === ph.title ? "opacity-100" : "opacity-0"
+                    openPhoto === ph.id ? "opacity-100" : "opacity-0"
                   }`}>
                   <span className="font-hand text-xl leading-none">{ph.title}</span>
                   <span className="text-xs leading-snug text-white/90 sm:text-sm">{ph.text}</span>
@@ -1088,6 +999,7 @@ function CustomCursor() {
 export default function App() {
   const active = useActiveSection(NAV_IDS);
   const { theme, toggle } = useTheme();
+  const content = useContent();
 
   return (
     <div className="relative overflow-x-clip bg-paper bg-grid bg-[length:32px_32px] text-ink-soft mouse:cursor-none [&_a]:mouse:cursor-none [&_button]:mouse:cursor-none">
@@ -1097,10 +1009,10 @@ export default function App() {
 
       <main>
         <Hero />
-        <Education />
-        <Experience />
-        <Projects />
-        <Life />
+        <Education items={content.education} />
+        <Experience items={content.experience} />
+        <Projects items={content.projects} />
+        <Life items={content.life} />
       </main>
 
       <Connect />

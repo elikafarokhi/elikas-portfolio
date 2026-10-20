@@ -1,0 +1,32 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Replace with your Firebase Auth UID (shown on /admin after you sign in).
+    // Must match VITE_FIREBASE_ADMIN_UID.
+    function isOwner() {
+      return request.auth != null && request.auth.uid == "REPLACE_WITH_YOUR_UID";
+    }
+
+    // Public site content: anyone can read, only the owner can write.
+    match /experience/{docId} {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+    match /projects/{docId} {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+    match /education/{docId} {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+    match /life/{docId} {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+
+    // Everything else is denied by default.
+  }
+}
