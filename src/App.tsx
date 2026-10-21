@@ -573,8 +573,8 @@ function Hero() {
 
 function TermTimeline({ start, end, currentTerm }: { start: string; end: string; currentTerm: Term }) {
   const current = TERMS.indexOf(currentTerm);
-  const last = TERMS.length - 1;
-  const pct = (i: number) => `${(i / last) * 100}%`;
+  // One extra notch past 4B marks graduation, so 4B isn't the end of the line.
+  const pct = (i: number) => `${(i / TERMS.length) * 100}%`;
   const label = `${start} to ${end}. Completed ${TERMS.slice(0, current).join(", ") || "no terms"}; now at the start of ${TERMS[current] ?? "the end"}.`;
 
   return (
@@ -616,6 +616,11 @@ function TermTimeline({ start, end, currentTerm }: { start: string; end: string;
               </div>
             );
           })}
+
+          <div className="absolute left-full top-0 flex -translate-x-1/2 flex-col items-center">
+            <span className="h-3 w-px bg-ink/40" />
+            <span className="mt-1.5 font-mono text-[11px] leading-none text-ink-muted">GRAD</span>
+          </div>
         </div>
       </div>
     </div>
