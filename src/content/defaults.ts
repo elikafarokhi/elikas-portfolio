@@ -93,7 +93,7 @@ export const DEFAULT_CONTENT: SiteContent = {
       order: 1,
       title: "BathroomBestie",
       description:
-        "A mobile safety net for nights out. It notices when you split from your group, go still, or miss your home deadline, then alerts a ladder of friends one at a time. There’s no panic button, no check-ins and no live GPS sharing. Gemini turns a one-sentence plan for your night into the rules the app follows, and location data stays coarse and private by design.",
+        "A mobile safety net for nights out, built with one other developer. It notices when you split from your group, go still, or miss your home deadline, then alerts a ladder of friends one at a time. There’s no panic button, no check-ins and no live GPS sharing. I built the React Native app, the API and the Gemini integration that turns a one-sentence plan for your night into the rules the app follows.",
       stack: ["TypeScript", "React Native", "Fastify", "TimescaleDB", "Gemini API"],
       tone: "white",
       featured: true,
