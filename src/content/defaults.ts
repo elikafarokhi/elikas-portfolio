@@ -111,7 +111,6 @@ export const DEFAULT_CONTENT: SiteContent = {
       stack: ["Embedded Systems", "Circuit Design", "Sensor Integration"],
       tone: "pink",
       featured: true,
-      note: "*glambot*",
       drive: "https://drive.google.com/drive/folders/1pebpcMREaty22Qw6zZ57es8MjyiGYoS-?usp=sharing",
       image: "/firefighter.jpeg",
     },

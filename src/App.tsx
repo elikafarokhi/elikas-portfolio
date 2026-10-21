@@ -754,13 +754,13 @@ function Projects({ items }: { items: Project[] }) {
   return (
     <Section id="projects" title="Projects" intro="A few things I've built for fun outside of classes and co-op">
       <div className="space-y-5">
-        {items.map((p, i) => (
+        {items.map((p) => (
           <article
             key={p.id}
             className={`relative flex flex-col gap-4 rounded-2xl border p-3 shadow-soft transition duration-300 hover:scale-102 motion-reduce:transition-none motion-reduce:hover:transform-none sm:flex-row sm:items-center ${CHIP_PINS} ${PROJECT_TONES[p.tone].card}`}
           >
             {p.featured && p.note && (
-              <span className={`absolute -top-4 z-10 bg-butter-300 px-3 py-1 font-hand text-xl leading-tight text-navy shadow-soft ${i % 2 ? "left-8 -rotate-2" : "right-8 rotate-2"}`}>
+              <span className="absolute -top-4 right-8 z-10 rotate-2 bg-butter-300 px-3 py-1 font-hand text-xl leading-tight text-navy shadow-soft">
                 {p.note}
               </span>
             )}
